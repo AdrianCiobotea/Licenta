@@ -65,4 +65,19 @@ public class UserService implements UserDetailsService {
     public int enableUser(String email) {
         return userRepository.enableUser(email);
     }
+
+    public User verifyLogin(String email, String password) {
+        User user = userRepository.findByEmail(email);
+        if(user !=null){
+            String encodedPassword = bCryptPasswordEncoder.encode(password);
+            if(user.getPassword().equals(encodedPassword)){
+                return user;
+            }else{
+                return null;
+            }
+        }else{
+            return null;
+        }
+
+    }
 }
