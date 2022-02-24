@@ -6,10 +6,7 @@ import lombok.AllArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "login")
@@ -18,7 +15,7 @@ public class LoginController {
 
     private UserService userService;
 
-    @GetMapping()
+    @PostMapping()
     public ResponseEntity<String> login(@RequestParam String email, @RequestParam String password) {
         //UserDetails user = userService.loadUserByUsername(email);
         User user = userService.verifyLogin(email, password);
@@ -35,7 +32,7 @@ public class LoginController {
                 return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
             }
         }
-        return token;
+        return new ResponseEntity<String>(JSONObject.quote(user.getAuthorities().toString()), HttpStatus.OK);
     }
 
 }
