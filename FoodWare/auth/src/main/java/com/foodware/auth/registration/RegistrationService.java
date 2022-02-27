@@ -50,8 +50,6 @@ public class RegistrationService {
             throw new IllegalStateException("token expired");
         }
         confirmationTokenService.setConfirmedAt(token);
-        userService.enableUser(
-                confirmationToken.getUser().getEmail());
         return "confirmed";
 
     }

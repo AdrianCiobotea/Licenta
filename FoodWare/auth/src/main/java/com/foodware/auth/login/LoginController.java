@@ -1,6 +1,8 @@
 package com.foodware.auth.login;
 
 import com.foodware.auth.user.User;
+import com.foodware.auth.user.UserDetails;
+import com.foodware.auth.user.UserRole;
 import com.foodware.auth.user.UserService;
 import lombok.AllArgsConstructor;
 import org.json.JSONObject;
@@ -17,21 +19,22 @@ public class LoginController {
 
     @PostMapping()
     public ResponseEntity<String> login(@RequestParam String email, @RequestParam String password) {
-        //UserDetails user = userService.loadUserByUsername(email);
-        User user = userService.verifyLogin(email, password);
-        if (user != null) {
-            try {
+        UserDetails user = userService.loadUserByEmail(email);
 
-                if (user.getAuthorities().equals("CLIENT"))
-                    return new ResponseEntity<String>(JSONObject.quote(user.getAuthorities().toString()), HttpStatus.OK);
-                else if (user.getAuthorities().equals("ADMIN"))
-                    return new ResponseEntity<String>(JSONObject.quote(user.getAuthorities().toString()), HttpStatus.ACCEPTED);
-                else
-                    throw new Exception();
-            } catch (Exception e) {
-                return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
-            }
+        if (user == null)
+            return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
+
+        try {
+            if (user.getUserRole().equals(UserRole.CLIENT))
+                return new ResponseEntity<String>(JSONObject.quote(user.getUserRole().toString()), HttpStatus.OK);
+            else if (user.getUserRole().equals(UserRole.ADMIN))
+                return new ResponseEntity<String>(JSONObject.quote(user.getUserRole().toString()), HttpStatus.ACCEPTED);
+            else
+                throw new Exception();
+        } catch (Exception e) {
+            return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
         }
+
         return new ResponseEntity<String>(JSONObject.quote(user.getAuthorities().toString()), HttpStatus.OK);
     }
 
