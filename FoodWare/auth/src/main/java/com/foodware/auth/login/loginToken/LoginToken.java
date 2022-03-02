@@ -1,4 +1,4 @@
-package com.foodware.auth.login.token;
+package com.foodware.auth.login.loginToken;
 
 import com.foodware.auth.user.User;
 import lombok.Getter;

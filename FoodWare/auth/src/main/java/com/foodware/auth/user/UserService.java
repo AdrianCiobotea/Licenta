@@ -18,14 +18,18 @@ import java.util.UUID;
 @Slf4j
 public class UserService {
     @Value("${spring.datasource.password}")
-    private final String databasePassword;
+    private String databasePassword;
     @Value("${spring.datasource.username}")
-    private final String databaseUserName;
+    private String databaseUserName;
     @Value("${spring.datasource.url}")
-    private final String databaseUrl;
+    private String databaseUrl;
 
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final ConfirmationTokenService confirmationTokenService;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private ConfirmationTokenService confirmationTokenService;
+
+    public UserService(){
+
+    }
 
     public UserDetails loadUserByEmail(String email) throws UsernameNotFoundException {
         try (Connection conn = DriverManager.getConnection(databaseUrl, databaseUserName, databasePassword);
@@ -45,8 +49,8 @@ public class UserService {
                 }
                 rs.beforeFirst();
                 UserDetails user = new UserDetails();
-                user.setFirstName(rs.getString("first_name"));
-                user.setLastName(rs.getString("last_name"));
+                user.setFirstName(name);
+                user.setLastName(lastName);
                 user.setUserRole(role);
 
                 return user;

@@ -1,11 +1,13 @@
 package com.foodware.auth.login;
 
+import com.foodware.auth.login.loginToken.LoginTokenService;
 import com.foodware.auth.user.User;
 import com.foodware.auth.user.UserDetails;
 import com.foodware.auth.user.UserRole;
 import com.foodware.auth.user.UserService;
 import lombok.AllArgsConstructor;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,27 +17,26 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class LoginController {
 
+
     private UserService userService;
 
     @PostMapping()
-    public ResponseEntity<String> login(@RequestParam String email, @RequestParam String password) {
+    public String login(@RequestParam(name="email",required = false) String email, @RequestParam(required = false) String password) {
         UserDetails user = userService.loadUserByEmail(email);
 
         if (user == null)
-            return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED).toString();
 
         try {
             if (user.getUserRole().equals(UserRole.CLIENT))
-                return new ResponseEntity<String>(JSONObject.quote(user.getUserRole().toString()), HttpStatus.OK);
+                return new ResponseEntity<String>(JSONObject.quote(user.getUserRole().toString()), HttpStatus.OK).toString();
             else if (user.getUserRole().equals(UserRole.ADMIN))
-                return new ResponseEntity<String>(JSONObject.quote(user.getUserRole().toString()), HttpStatus.ACCEPTED);
+                return new ResponseEntity<String>(JSONObject.quote(user.getUserRole().toString()), HttpStatus.ACCEPTED).toString();
             else
                 throw new Exception();
         } catch (Exception e) {
-            return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED).toString();
         }
-
-        return new ResponseEntity<String>(JSONObject.quote(user.getAuthorities().toString()), HttpStatus.OK);
     }
 
 }
