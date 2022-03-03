@@ -15,31 +15,31 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(path = "login")
 @AllArgsConstructor
-@CrossOrigin(origins="*", allowedHeaders="*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class LoginController {
 
 
-  private UserService userService;
+    private UserService userService;
 
-  @PostMapping()
-  public ResponseEntity<String> login(@RequestBody User userParam) {
-    UserDetails user = userService.loadUserByEmail(userParam.getEmail());
+    @PostMapping()
+    public ResponseEntity<String> login(@RequestBody User userParam) {
+        UserDetails user = userService.verifyLogin(userParam.getEmail(), userParam.getPassword());
 
-    if (user == null) {
-      return new ResponseEntity<String>("bye bye",HttpStatus.UNAUTHORIZED);
+        if (user == null) {
+            return new ResponseEntity<String>("bye bye", HttpStatus.UNAUTHORIZED);
+        }
+
+        try {
+            if (user.getUserRole().equals(UserRole.CLIENT)) {
+                return new ResponseEntity<String>(JSONObject.quote(user.getUserRole().toString()), HttpStatus.OK);
+            } else if (user.getUserRole().equals(UserRole.ADMIN)) {
+                return new ResponseEntity<String>(JSONObject.quote(user.getUserRole().toString()), HttpStatus.ACCEPTED);
+            } else {
+                throw new Exception();
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
+        }
     }
-
-    try {
-      if (user.getUserRole().equals(UserRole.CLIENT)) {
-        return new ResponseEntity<String>(JSONObject.quote(user.getUserRole().toString()), HttpStatus.OK);
-      } else if (user.getUserRole().equals(UserRole.ADMIN)) {
-        return new ResponseEntity<String>(JSONObject.quote(user.getUserRole().toString()), HttpStatus.ACCEPTED);
-      } else {
-        throw new Exception();
-      }
-    } catch (Exception e) {
-      return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
-    }
-  }
 
 }

@@ -4,6 +4,7 @@ import com.foodware.auth.registration.token.ConfirmationToken;
 import com.foodware.auth.registration.token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,7 +25,9 @@ public class UserService {
     @Value("${spring.datasource.url}")
     private String databaseUrl;
 
+    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
     private ConfirmationTokenService confirmationTokenService;
 
     public UserService(){
@@ -33,25 +36,26 @@ public class UserService {
 
     public UserDetails loadUserByEmail(String email) throws UsernameNotFoundException {
         try (Connection conn = DriverManager.getConnection(databaseUrl, databaseUserName, databasePassword);
-             PreparedStatement selectStatement = conn.prepareStatement("select first_name,last_name,user_role from user where email=?");) {
+             PreparedStatement selectStatement = conn.prepareStatement("select first_name,last_name,user_role,password from user where email=?");) {
             selectStatement.setString(1, email);
             ResultSet rs = selectStatement.executeQuery();
             while (rs.next()) {
-                long id = rs.getLong("ID");
                 String name = rs.getString("first_name");
                 String lastName = rs.getString("last_name");
                 String userRole = rs.getString("user_role");
+                String password = rs.getString("password");
                 UserRole role = null;
                 if (userRole.equals(UserRole.CLIENT.name())) {
                     role = UserRole.CLIENT;
                 } else {
                     role = UserRole.ADMIN;
                 }
-                rs.beforeFirst();
                 UserDetails user = new UserDetails();
                 user.setFirstName(name);
                 user.setLastName(lastName);
                 user.setUserRole(role);
+                user.setPassword(password);
+                user.setEmail(email);
 
                 return user;
             }
@@ -61,6 +65,16 @@ public class UserService {
         }
         return null;
     }
+
+    public UserDetails verifyLogin(String email, String password){
+       UserDetails user = loadUserByEmail(email);
+       if(bCryptPasswordEncoder.matches(password,user.getPassword())){
+           return user;
+       }else{
+           return null;
+       }
+    }
+
 
     public String signUpUser(User user) {
         boolean userExists = loadUserByEmail(user.getEmail()) != null;
