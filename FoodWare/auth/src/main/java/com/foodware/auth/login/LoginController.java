@@ -25,10 +25,11 @@ public class LoginController {
     public ResponseEntity<String> login(@RequestBody User userParam) {
         UserDetails user = userService.verifyLogin(userParam.getEmail(), userParam.getPassword());
 
+
         if (user == null) {
             return new ResponseEntity<String>("bye bye", HttpStatus.UNAUTHORIZED);
         }
-
+//Generate token
         try {
             if (user.getUserRole().equals(UserRole.CLIENT)) {
                 return new ResponseEntity<String>(JSONObject.quote(user.getUserRole().toString()), HttpStatus.OK);
