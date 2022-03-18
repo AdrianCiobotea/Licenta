@@ -1,15 +1,19 @@
-package entity;
+package com.example.demo.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import javax.persistence.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
+//@Table(name = "product")
 public class Product {
     @Id
     @GeneratedValue(
@@ -22,9 +26,11 @@ public class Product {
     private double price;
     @Column(nullable = false, name = "description")
     private String description;
-    @OneToMany
-    @JoinColumn(nullable = false, name = "category_id")
-    private int categoryId;
+    //@ManyToOne(cascade= CascadeType.ALL , mappedBy = "product")
+    //@JoinColumn(name="category_id", nullable=false)
+    private int category_id;
     @Column(name = "image")
     private byte[] image;
+    @Column(name="extra")
+    private Boolean extra;
 }

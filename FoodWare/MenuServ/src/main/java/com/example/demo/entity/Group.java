@@ -1,16 +1,20 @@
-package entity;
+package com.example.demo.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
-
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity(name="extra")
-public class Extra {
+@Entity
+//@Table(name = "group")
+public class Group {
     @Id
     @GeneratedValue(
             strategy = GenerationType.AUTO
@@ -18,6 +22,4 @@ public class Extra {
     private int id;
     @Column(name = "name")
     private String name;
-    @Column(name = "price")
-    private double price;
 }

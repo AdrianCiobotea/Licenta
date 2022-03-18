@@ -3,6 +3,7 @@ package com.foodware.auth.user;
 import com.foodware.auth.registration.token.ConfirmationToken;
 import com.foodware.auth.registration.token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,6 +17,7 @@ import java.util.UUID;
 
 @Service
 @AllArgsConstructor
+@NoArgsConstructor
 @Slf4j
 public class UserService {
     @Value("${spring.datasource.password}")
@@ -29,10 +31,6 @@ public class UserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
     private ConfirmationTokenService confirmationTokenService;
-
-    public UserService(){
-
-    }
 
     public UserDetails loadUserByEmail(String email) throws UsernameNotFoundException {
         try (Connection conn = DriverManager.getConnection(databaseUrl, databaseUserName, databasePassword);
