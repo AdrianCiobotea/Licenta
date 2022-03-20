@@ -25,6 +25,11 @@ public class CategoryController {
         return categoryService.loadAllCategories();
     }
 
+    @GetMapping(path = "/{id}")
+    public java.util.Optional<Category> getCategoryById(@PathVariable Integer id) {
+        return categoryService.loadCategoryById(id);
+    }
+
     @PostMapping(path = "delete/{id}")
     public void deleteCategory(@PathVariable Integer id) {
         categoryService.deleteCategoryById(id);

@@ -1,13 +1,11 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.ProductDetails;
+import com.example.demo.entity.Category;
 import com.example.demo.entity.Product;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import com.example.demo.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -42,19 +40,34 @@ public class ProductService {
 
 
     public Iterable<Product> loadAllProducts() {
-        return productRepository.findAll();
+        List<Product> products = new ArrayList<>();
+        productRepository.findAll().forEach(products::add);
+        return products;
+    }
+
+    public Optional<Product> loadProductById(int productId) {
+        return productRepository.findById(productId);
     }
 
     public void deleteProductById(int productId) {
         productRepository.deleteById(productId);
     }
 
-    public String updateProduct(Product product) {
+    public String updateProduct(Product product,int id) {
         try {
+            Optional<Product> productDB = loadProductById(id);
+            if (productDB.isPresent()) {
+                productDB.get().setCategory(product.getCategory());
+                productDB.get().setDescription(product.getDescription());
+                productDB.get().setName(product.getName());
+                productDB.get().setPrice(product.getPrice());
+                productDB.get().setIsExtra(product.getIsExtra());
+                productDB.get().setImage(product.getImage());
+            }
             productRepository.save(product);
         } catch (IllegalArgumentException e) {
             return "Please provide a valid product";
         }
-        return "Successfully updated the product product";
+        return "Successfully updated the product";
     }
 }

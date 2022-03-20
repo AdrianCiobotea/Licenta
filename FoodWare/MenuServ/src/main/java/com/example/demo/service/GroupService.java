@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.example.demo.entity.Product;
 import com.example.demo.repository.GroupRepository;
@@ -44,6 +45,10 @@ public class GroupService {
         List<Group> groups = new ArrayList<>();
         groupRepository.findAll().forEach(groups::add);
         return groups;
+    }
+
+    public Optional<Group> loadGroupById(int groupId) {
+        return groupRepository.findById(groupId);
     }
 
     public void deleteGroupById(int groupId) {

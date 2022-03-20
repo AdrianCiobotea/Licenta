@@ -28,6 +28,16 @@ public class ProductController {
     return products;
   }
 
+  @GetMapping(path = "/{id}")
+  public java.util.Optional<Product> getProductById(@PathVariable Integer id) {
+    return productService.loadProductById(id);
+  }
+
+  @PostMapping(path = "update/{id}")
+  public String addProduct(@PathVariable Integer id,@RequestBody Product product) {
+    return productService.updateProduct(product,id);
+  }
+
   @PostMapping(path = "delete/{id}")
   public void deleteProduct(@PathVariable Integer id) {
     productService.deleteProductById(id);

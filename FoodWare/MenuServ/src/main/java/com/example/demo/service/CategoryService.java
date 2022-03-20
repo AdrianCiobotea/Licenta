@@ -10,7 +10,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import com.example.demo.entity.Group;
 import com.example.demo.repository.CategoryRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +49,10 @@ public class CategoryService {
         List<Category> categories = new ArrayList<>();
         categoryRepository.findAll().forEach(categories::add);
         return categories;
+    }
+
+    public Optional<Category> loadCategoryById(int categoryId) {
+        return categoryRepository.findById(categoryId);
     }
 
     public void deleteCategoryById(int categoryId) {
