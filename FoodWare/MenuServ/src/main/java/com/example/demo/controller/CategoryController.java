@@ -1,29 +1,32 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.CategoryDetails;
 import com.example.demo.entity.Category;
+import com.example.demo.entity.Product;
 import com.example.demo.service.CategoryService;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "category")
 public class CategoryController {
-  @Autowired
-  CategoryService categoryService;
+    @Autowired
+    CategoryService categoryService;
 
-  @PostMapping(path = "insert")
-  public String addCategory(@RequestBody Category category) {
-    return categoryService.insertCategory(category);
-  }
+    @PostMapping(path = "insert")
+    public String addCategory(@RequestBody Category category) {
+        return categoryService.insertCategory(category);
+    }
 
-  @GetMapping()
-  public List<CategoryDetails> getAllCategories() {
-    return categoryService.loadAllCategories();
-  }
+    @GetMapping()
+    public List<Category> getAllCategories() {
+        return categoryService.loadAllCategories();
+    }
+
+    @PostMapping(path = "delete/{id}")
+    public void deleteCategory(@PathVariable Integer id) {
+        categoryService.deleteCategoryById(id);
+    }
 }

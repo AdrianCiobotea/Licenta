@@ -1,16 +1,12 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.ProductDetails;
 import com.example.demo.entity.Product;
 import com.example.demo.service.ProductService;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "product")
@@ -26,7 +22,14 @@ public class ProductController {
   }
 
   @GetMapping()
-  public List<ProductDetails> getAllProducts() {
-    return productService.loadAllProducts();
+  public Iterable<Product> getAllProducts() {
+    List<Product> products = new ArrayList<>();
+    productService.loadAllProducts().forEach(products::add);
+    return products;
+  }
+
+  @PostMapping(path = "delete/{id}")
+  public void deleteProduct(@PathVariable Integer id) {
+    productService.deleteProductById(id);
   }
 }

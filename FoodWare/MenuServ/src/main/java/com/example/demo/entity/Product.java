@@ -1,10 +1,7 @@
 package com.example.demo.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,11 +10,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-//@Table(name = "product")
+@Table(name = "product")
 public class Product {
     @Id
     @GeneratedValue(
-            strategy = GenerationType.AUTO
+            strategy = GenerationType.IDENTITY
     )
     private int id;
     @Column(nullable = false, name = "name")
@@ -26,11 +23,11 @@ public class Product {
     private double price;
     @Column(nullable = false, name = "description")
     private String description;
-    //@ManyToOne(cascade= CascadeType.ALL , mappedBy = "product")
-    //@JoinColumn(name="category_id", nullable=false)
-    private int category_id;
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
     @Column(name = "image")
     private byte[] image;
-    @Column(name="extra")
-    private Boolean extra;
+    @Column(name = "is_extra", nullable = false)
+    private Boolean isExtra;
 }
