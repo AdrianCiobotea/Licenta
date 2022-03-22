@@ -30,6 +30,11 @@ public class CategoryController {
         return categoryService.loadCategoryById(id);
     }
 
+    @PostMapping(path = "update/{id}")
+    public String updateCategory(@PathVariable Integer id,@RequestBody Category category) {
+        return categoryService.updateCategory(category,id);
+    }
+
     @PostMapping(path = "delete/{id}")
     public void deleteCategory(@PathVariable Integer id) {
         categoryService.deleteCategoryById(id);

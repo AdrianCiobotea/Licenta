@@ -59,9 +59,14 @@ public class CategoryService {
         categoryRepository.deleteById(categoryId);
     }
 
-    public String updateCategory(Category category) {
+    public String updateCategory(Category category, int id) {
         try {
-            categoryRepository.save(category);
+            Optional<Category> categoryDB = loadCategoryById(id);
+            if (categoryDB.isPresent()) {
+                categoryDB.get().setName(category.getName());
+                categoryDB.get().setGroup(category.getGroup());
+            }
+            categoryRepository.save(categoryDB.get());
         } catch (IllegalArgumentException e) {
             return "Please provide a valid category";
         }

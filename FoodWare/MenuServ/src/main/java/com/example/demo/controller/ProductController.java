@@ -13,33 +13,33 @@ import java.util.List;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ProductController {
 
-  @Autowired
-  ProductService productService;
+    @Autowired
+    ProductService productService;
 
-  @PostMapping(path = "insert")
-  public String addProduct(@RequestBody Product product) {
-    return productService.insertProduct(product);
-  }
+    @PostMapping(path = "insert")
+    public String addProduct(@RequestBody Product product) {
+        return productService.insertProduct(product);
+    }
 
-  @GetMapping()
-  public Iterable<Product> getAllProducts() {
-    List<Product> products = new ArrayList<>();
-    productService.loadAllProducts().forEach(products::add);
-    return products;
-  }
+    @GetMapping()
+    public Iterable<Product> getAllProducts() {
+        List<Product> products = new ArrayList<>();
+        productService.loadAllProducts().forEach(products::add);
+        return products;
+    }
 
-  @GetMapping(path = "/{id}")
-  public java.util.Optional<Product> getProductById(@PathVariable Integer id) {
-    return productService.loadProductById(id);
-  }
+    @GetMapping(path = "/{id}")
+    public java.util.Optional<Product> getProductById(@PathVariable Integer id) {
+        return productService.loadProductById(id);
+    }
 
-  @PostMapping(path = "update/{id}")
-  public String addProduct(@PathVariable Integer id,@RequestBody Product product) {
-    return productService.updateProduct(product,id);
-  }
+    @PostMapping(path = "update/{id}")
+    public String updateProduct(@PathVariable Integer id, @RequestBody Product product) {
+        return productService.updateProduct(product, id);
+    }
 
-  @PostMapping(path = "delete/{id}")
-  public void deleteProduct(@PathVariable Integer id) {
-    productService.deleteProductById(id);
-  }
+    @PostMapping(path = "delete/{id}")
+    public String deleteProduct(@PathVariable Integer id) {
+        return productService.deleteProductById(id);
+    }
 }

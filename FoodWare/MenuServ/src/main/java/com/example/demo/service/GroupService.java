@@ -55,9 +55,13 @@ public class GroupService {
         groupRepository.deleteById(groupId);
     }
 
-    public String updateGroup(Group group) {
+    public String updateGroup(Group group,int id) {
         try {
-            groupRepository.save(group);
+            Optional<Group> groupDB = loadGroupById(id);
+            if (groupDB.isPresent()) {
+                groupDB.get().setName(group.getName());
+            }
+            groupRepository.save(groupDB.get());
         } catch (IllegalArgumentException e) {
             return "Please provide a valid group";
         }

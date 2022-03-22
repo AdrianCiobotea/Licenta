@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "2680cd1b-96be-4861-a595-193ad806aea8",
+		"_postman_id": "685ca245-e5d5-4b9d-8cbb-b6f4389f800d",
 		"name": "Foodware Menu",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -8,32 +8,138 @@
 		{
 			"name": "Insert Product",
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"category\": {\r\n    \"group\": {\r\n      \"id\": 1\r\n    },\r\n    \"id\": 1\r\n  },\r\n  \"description\": \"adad\",\r\n  \"isExtra\": 0,\r\n  \"name\": \"string\",\r\n  \"price\": 12\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/product/insert",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"product",
+						"insert"
+					]
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "Insert Group",
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"snaks\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/group/insert",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"group",
+						"insert"
+					]
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "Insert category",
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"group\": {\r\n    \"id\":2\r\n  },\r\n  \"name\": \"Alcoholic drinks\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/category/insert",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"category",
+						"insert"
+					]
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "New Request",
+			"name": "Delete Product",
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/product/delete/10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"product",
+						"delete",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update product",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"category\": {\r\n    \"group\": {\r\n      \"id\": 1,\r\n      \"name\": \"Food\"\r\n    },\r\n    \"id\": 1,\r\n    \"name\": \"Pizza\"\r\n  },\r\n  \"description\": \"adad\",\r\n  \"image\": \"adad\",\r\n  \"isExtra\": 0,\r\n  \"name\": \"string\",\r\n  \"price\": 12\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/product/update/22",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"product",
+						"update",
+						"22"
+					]
+				}
 			},
 			"response": []
 		}

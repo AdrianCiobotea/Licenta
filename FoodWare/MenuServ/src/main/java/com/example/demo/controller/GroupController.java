@@ -30,6 +30,11 @@ public class GroupController {
         return groupService.loadGroupById(id);
     }
 
+    @PostMapping(path = "update/{id}")
+    public String updateGroup(@PathVariable Integer id, @RequestBody Group group) {
+        return groupService.updateGroup(group, id);
+    }
+
     @PostMapping(path = "delete/{id}")
     public void deleteGroup(@PathVariable Integer id) {
         groupService.deleteGroupById(id);
