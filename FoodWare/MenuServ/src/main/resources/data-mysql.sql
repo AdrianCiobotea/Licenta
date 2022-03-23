@@ -1,6 +1,15 @@
-INSERT INTO cat_group (name) VALUES ('Food'), ('Drinks'), ('Specialties');
+INSERT INTO cat_group (name) VALUES
+('Food'),
+('Drinks'),
+('Specialties');
 
-INSERT INTO category (name,group_id) VALUES ('Pizza','1'), ('Pasta','1'), ('Soft Drinks','2'),('Tea','2'), ('Coffee','2'), ('Sauces','3');
+INSERT INTO category (name,group_id) VALUES
+('Pizza','1'),
+('Pasta','1'),
+('Soft Drinks','2'),
+('Tea','2'),
+('Coffee','2'),
+('Sauces','3');
 
 INSERT INTO product (name,price,description,category_id,is_extra) VALUES
 ('Quattro Formagi','20','4 types of cheese','1',0),
