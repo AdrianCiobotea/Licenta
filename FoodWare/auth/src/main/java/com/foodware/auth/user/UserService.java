@@ -2,6 +2,7 @@ package com.foodware.auth.user;
 
 import com.foodware.auth.registration.token.ConfirmationToken;
 import com.foodware.auth.registration.token.ConfirmationTokenService;
+import com.foodware.auth.user.User;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

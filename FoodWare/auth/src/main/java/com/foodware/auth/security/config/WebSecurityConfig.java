@@ -45,6 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class)
                 .addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class)
                 .authorizeRequests()
+<<<<<<< Updated upstream
                 .antMatchers("/myAccount").hasRole("USER")
                 .antMatchers("/myBalance").hasAnyRole("USER","ADMIN")
                 .antMatchers("/myLoans").hasRole("ROOT")
@@ -52,6 +53,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user").authenticated()
                 .antMatchers("/notices").permitAll()
                 .antMatchers("/contact").permitAll().and().httpBasic();
+=======
+                //.antMatchers("/login/**").permitAll()
+                    .antMatchers("/register/**")
+                    .permitAll()
+                .anyRequest()
+                .authenticated().and()
+                .formLogin();
+>>>>>>> Stashed changes
     }
 
 }

@@ -37,8 +37,21 @@ Usage: maildev [options]
 | `--https`                        | `MAILDEV_HTTPS`            | Switch from http to https protocol                                                        |
 | `--https-key <file>`             | `MAILDEV_HTTPS_KEY`        | The file path to the ssl private key                                                      |
 | `--https-cert <file>`            | `MAILDEV_HTTPS_CERT`       | The file path to the ssl cert file                                                        |
-| `--ip <ip address>`              | `MAILDEV_IP`               | IP Address to bind SMTP service to                                                        |
-| `--outgoing-host <host>`         | `MAILDEV_OUTGOING_HOST`    | SMTP host for outgoing emails                                                             |
+| `--ip <ip address>`
+					    |
+					    `MAILDEV_IP`
+					    |
+					    IP
+					    Address
+					    to
+					    bind
+					    SMTP
+					    service
+					    to
+					    |
+					    |
+					    `--outgoing-host
+					<host>`         | `MAILDEV_OUTGOING_HOST`    | SMTP host for outgoing emails                                                             |
 | `--outgoing-port <port>`         | `MAILDEV_OUTGOING_PORT`    | SMTP port for outgoing emails                                                             |
 | `--outgoing-user <user>`         | `MAILDEV_OUTGOING_USER`    | SMTP user for outgoing emails                                                             |
 | `--outgoing-pass <password>`     | `MAILDEV_OUTGOING_PASS`    | SMTP password for outgoing emails                                                         |
@@ -47,8 +60,24 @@ Usage: maildev [options]
 | `--auto-relay-rules <file>`      | `MAILDEV_AUTO_RELAY_RULES` | Filter rules for auto relay mode                                                          |
 | `--incoming-user <user>`         | `MAILDEV_INCOMING_USER`    | SMTP user for incoming emails                                                             |
 | `--incoming-pass <pass>`         | `MAILDEV_INCOMING_PASS`    | SMTP password for incoming emails                                                         |
-| `--web-ip <ip address>`          | `MAILDEV_WEB_IP`           | IP Address to bind HTTP service to, defaults to --ip                                      |
-| `--web-user <user>`              | `MAILDEV_WEB_USER`         | HTTP user for GUI                                                                         |
+| `--web-ip <ip address>`
+												    |
+												    `MAILDEV_WEB_IP`
+												    |
+												    IP
+												    Address
+												    to
+												    bind
+												    HTTP
+												    service
+												    to,
+												    defaults
+												    to
+												    --ip
+												    |
+												    |
+												    `--web-user
+												<user>`              | `MAILDEV_WEB_USER`         | HTTP user for GUI                                                                         |
 | `--web-pass <password>`          | `MAILDEV_WEB_PASS`         | HTTP password for GUI                                                                     |
 | `--base-pathname <path>`         | `MAILDEV_BASE_PATHNAME`    | Base path for URLs                                                                        |
 | `--disable-web`                  | `MAILDEV_DISABLE_WEB`      | Disable the use of the web interface. Useful for unit testing                             |

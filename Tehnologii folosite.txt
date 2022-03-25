@@ -1,0 +1,32 @@
+Tehnologii:
+
+*java
+*swagger
+*spring
+	*-springboot
+	*-spring security
+	*-spring rest
+	
+Rest template ? WebClient
+
+*angular
+	*html 
+		*->verificare erori in pagina html
+	*css
+	*javascript
+	*typescript
+	*bootstrap
+	*-angular material
+	*redux
+
+lombok
+baze de date 	
+	-hibernate
+	-mysql
+	-mysqlworkbench
+git
+intellij
+*postman
+trello
+confluence
+
