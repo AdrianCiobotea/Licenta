@@ -23,11 +23,11 @@ public class Product {
   private double price;
   @Column(nullable = false, name = "description")
   private String description;
-  @ManyToOne(cascade = CascadeType.ALL)
+  //@ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "category_id", nullable = false)
-  private Category category;
+  private int categoryId;
   @Column(name = "image")
-  private byte[] image;
+  private String imageURL;
   @Column(name = "is_extra", nullable = false)
   private Boolean isExtra;
 }

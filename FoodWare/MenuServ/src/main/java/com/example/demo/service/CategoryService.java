@@ -1,19 +1,10 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.CategoryDetails;
 import com.example.demo.entity.Category;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import com.example.demo.repository.CategoryRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import com.example.demo.entity.Group;
-import com.example.demo.repository.CategoryRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -64,7 +55,7 @@ public class CategoryService {
             Optional<Category> categoryDB = loadCategoryById(id);
             if (categoryDB.isPresent()) {
                 categoryDB.get().setName(category.getName());
-                categoryDB.get().setGroup(category.getGroup());
+                categoryDB.get().setGroupId(category.getGroupId());
             }
             categoryRepository.save(categoryDB.get());
         } catch (IllegalArgumentException e) {
