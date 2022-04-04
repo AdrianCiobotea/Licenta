@@ -17,31 +17,31 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class GroupController {
 
-    @Autowired
-    private GroupService groupService;
+  @Autowired
+  private GroupService groupService;
 
-    @PostMapping(path = "insert")
-    public String addGroup(@RequestBody Group group) {
-        return groupService.insertGroup(group);
-    }
+  @PostMapping(path = "insert")
+  public String addGroup(@RequestBody Group group) {
+    return groupService.insertGroup(group);
+  }
 
-    @GetMapping()
-    public List<Group> getAllGroups() {
-        return groupService.loadAllGroups();
-    }
+  @GetMapping()
+  public List<Group> getAllGroups() {
+    return groupService.loadAllGroups();
+  }
 
-    @GetMapping(path = "/{id}")
-    public java.util.Optional<Group> getGroupById(@PathVariable Integer id) {
-        return groupService.loadGroupById(id);
-    }
+  @GetMapping(path = "/{id}")
+  public java.util.Optional<Group> getGroupById(@PathVariable Integer id) {
+    return groupService.loadGroupById(id);
+  }
 
-    @PostMapping(path = "update/{id}")
-    public String updateGroup(@PathVariable Integer id, @RequestBody Group group) {
-        return groupService.updateGroup(group, id);
-    }
+  @PostMapping(path = "update/{id}")
+  public String updateGroup(@PathVariable Integer id, @RequestBody Group group) {
+    return groupService.updateGroup(group, id);
+  }
 
-    @PostMapping(path = "delete/{id}")
-    public void deleteGroup(@PathVariable Integer id) {
-        groupService.deleteGroupById(id);
-    }
+  @PostMapping(path = "delete/{id}")
+  public String deleteGroup(@PathVariable Integer id) {
+    return groupService.deleteGroupById(id);
+  }
 }

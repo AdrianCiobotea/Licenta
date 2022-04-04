@@ -23,5 +23,9 @@ public class Image {
   private int id;
   @Column(name = "image")
   private byte[] image;
+
+  public Image(byte[] image) {
+    this.image = image;
+  }
 }
 

@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Product;
+import com.example.demo.repository.ImageRepository;
 import com.example.demo.repository.ProductRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +18,9 @@ public class ProductService {
 
   @Autowired
   ProductRepository productRepository;
+
   @Autowired
-  private CategoryService categoryService;
+  ImageRepository imageRepository;
 
   @Value("${spring.datasource.password}")
   private String databasePassword;
@@ -37,7 +39,7 @@ public class ProductService {
   }
 
 
-  public Iterable<Product> loadAllProducts() {
+  public List<Product> loadAllProducts() {
     List<Product> products = new ArrayList<>();
     productRepository.findAll().forEach(products::add);
     return products;
@@ -48,8 +50,16 @@ public class ProductService {
   }
 
   public String deleteProductById(int productId) {
-    productRepository.deleteById(productId);
-    return "Successfully deleted product with id " + productId;
+    try {
+      int imageId = productRepository.findById(productId).get().getImageId();
+      productRepository.deleteById(productId);
+      imageRepository.deleteById(imageId);
+      return "Successfully deleted product with id " + productId;
+    } catch (NoSuchElementException e) {
+      log.info("The product with the id: " + productId + " doesn't exist");
+      return "The product with the id: " + productId + " doesn't exist";
+    }
+
   }
 
   public String updateProduct(Product product, int id) {

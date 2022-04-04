@@ -25,9 +25,9 @@ public class Product {
   private String description;
   //@ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "category_id", nullable = false)
-  private int categoryId;
+  private Integer categoryId;
   @Column(name = "image_id")
-  private String imageId;
+  private Integer imageId;
   @Column(name = "is_extra", nullable = false)
   private Boolean isExtra;
 }

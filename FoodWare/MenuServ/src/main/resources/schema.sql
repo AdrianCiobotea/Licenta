@@ -18,7 +18,7 @@ primary key (id)) engine=InnoDB;
 
 create table image (
 id integer not null auto_increment,
-image BLOB,
+image LONGBLOB,
 primary key (id)) engine=InnoDB;
 
 create table category (

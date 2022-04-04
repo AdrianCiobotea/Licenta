@@ -16,31 +16,31 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "category")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class CategoryController {
-    @Autowired
-    CategoryService categoryService;
+  @Autowired
+  CategoryService categoryService;
 
-    @PostMapping(path = "insert")
-    public String addCategory(@RequestBody Category category) {
-        return categoryService.insertCategory(category);
-    }
+  @PostMapping(path = "insert")
+  public String addCategory(@RequestBody Category category) {
+    return categoryService.insertCategory(category);
+  }
 
-    @GetMapping()
-    public List<Category> getAllCategories() {
-        return categoryService.loadAllCategories();
-    }
+  @GetMapping()
+  public List<Category> getAllCategories() {
+    return categoryService.loadAllCategories();
+  }
 
-    @GetMapping(path = "/{id}")
-    public java.util.Optional<Category> getCategoryById(@PathVariable Integer id) {
-        return categoryService.loadCategoryById(id);
-    }
+  @GetMapping(path = "/{id}")
+  public java.util.Optional<Category> getCategoryById(@PathVariable Integer id) {
+    return categoryService.loadCategoryById(id);
+  }
 
-    @PostMapping(path = "update/{id}")
-    public String updateCategory(@PathVariable Integer id,@RequestBody Category category) {
-        return categoryService.updateCategory(category,id);
-    }
+  @PostMapping(path = "update/{id}")
+  public String updateCategory(@PathVariable Integer id, @RequestBody Category category) {
+    return categoryService.updateCategory(category, id);
+  }
 
-    @PostMapping(path = "delete/{id}")
-    public void deleteCategory(@PathVariable Integer id) {
-        categoryService.deleteCategoryById(id);
-    }
+  @PostMapping(path = "delete/{id}")
+  public String deleteCategory(@PathVariable Integer id) {
+    return categoryService.deleteCategoryById(id);
+  }
 }
