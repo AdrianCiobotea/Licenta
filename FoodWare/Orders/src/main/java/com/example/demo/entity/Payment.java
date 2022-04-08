@@ -15,16 +15,15 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "category")
-public class Category {
+@Table(name = "payment")
+public class Payment {
   @Id
   @GeneratedValue(
       strategy = GenerationType.IDENTITY
   )
   private int id;
-  @Column(nullable = false, name = "name")
-  private String name;
-  //@ManyToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "group_id")
-  private int groupId;
+  @Column(nullable = false, name = "amount")
+  private double amount;
+  @JoinColumn(name = "payment_id")
+  private int payment_id;
 }

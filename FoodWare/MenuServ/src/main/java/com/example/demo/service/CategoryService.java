@@ -18,6 +18,7 @@ public class CategoryService {
 
   @Autowired
   CategoryRepository categoryRepository;
+
   @Autowired
   private GroupService groupService;
 
@@ -26,8 +27,10 @@ public class CategoryService {
 
   @Value("${spring.datasource.password}")
   private String databasePassword;
+
   @Value("${spring.datasource.username}")
   private String databaseUserName;
+
   @Value("${spring.datasource.url}")
   private String databaseUrl;
 

@@ -1,0 +1,377 @@
+{
+	"info": {
+		"_postman_id": "2680cd1b-96be-4861-a595-193ad806aea8",
+		"name": "Foodware Menu",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "Insert Product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"contentType": "",
+									"type": "file",
+									"src": "/C:/Users/aciobotea/Documents/GitHub/Licenta/FoodWare/MenuServ/pizza.jpg"
+								},
+								{
+									"key": "product",
+									"value": "{\n\"name\":\"quattro\",\n\"price\":20,\n\"description\":\"4 types of cheese\",\n\"categoryId\":1,\n\"isExtra\":false\n}",
+									"contentType": "application/json",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8084/product/insert",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8084",
+							"path": [
+								"product",
+								"insert"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8084/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8084",
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8084/product/delete/24",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8084",
+							"path": [
+								"product",
+								"delete",
+								"24"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"description\": \"\",\r\n  \"imageURL\": \"https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.lamamma.ro%2Fro%2Ftermek%2Fquattro-formaggi%2F&psig=AOvVaw15_Wz6ndFp6CzgJ6XZXJJK&ust=1648644745392000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCMjnnbeu6_YCFQAAAAAdAAAAABAD\",\r\n  \"isExtra\": false,\r\n  \"name\": \"\",\r\n  \"price\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8084/product/update/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8084",
+							"path": [
+								"product",
+								"update",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get image by product id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8084/product/image/24",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8084",
+							"path": [
+								"product",
+								"image",
+								"24"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete image by product id",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8084/product/image/delete/24",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8084",
+							"path": [
+								"product",
+								"image",
+								"delete",
+								"24"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "Insert category",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"group_id\": 2,\r\n  \"name\": \"Soft Drinks\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8084/category/insert",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8084",
+							"path": [
+								"category",
+								"insert"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8084/category",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8084",
+							"path": [
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete category",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8084/category/delete/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8084",
+							"path": [
+								"category",
+								"delete",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update category",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"name\": \"Pizza\",\r\n        \"group\": {\r\n            \"id\": 1,\r\n            \"name\": \"Food\"\r\n        }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8084/category/update/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8084",
+							"path": [
+								"category",
+								"update",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Group",
+			"item": [
+				{
+					"name": "Insert Group",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Food\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8084/group/insert",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8084",
+							"path": [
+								"group",
+								"insert"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all groups",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8084/group",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8084",
+							"path": [
+								"group"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete group",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8084/group/delete/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8084",
+							"path": [
+								"group",
+								"delete",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update group",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"name\": \"Cocktails\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8084/group/update/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8084",
+							"path": [
+								"group",
+								"update",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
