@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.entity.Category;
 import com.example.demo.entity.Product;
+import com.example.demo.repository.BaseCategoryRepository;
 import com.example.demo.repository.CategoryRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,9 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 public class CategoryService {
+
+  @Autowired
+  BaseCategoryRepository baseCategoryRepository;
 
   @Autowired
   CategoryRepository categoryRepository;
@@ -37,7 +41,7 @@ public class CategoryService {
 
   public String insertCategory(Category category) {
     try {
-      categoryRepository.save(category);
+      baseCategoryRepository.save(category);
     } catch (IllegalArgumentException e) {
       return "Please provide a valid category";
     }
@@ -46,12 +50,18 @@ public class CategoryService {
 
   public List<Category> loadAllCategories() {
     List<Category> categories = new ArrayList<>();
-    categoryRepository.findAll().forEach(categories::add);
+    baseCategoryRepository.findAll().forEach(categories::add);
+    return categories;
+  }
+
+  public List<Category> loadAllCategoriesByGroupId(int groupId) {
+    List<Category> categories = new ArrayList<>();
+    categoryRepository.findCategoriesByGroupId(groupId).forEach(categories::add);
     return categories;
   }
 
   public Optional<Category> loadCategoryById(int categoryId) {
-    return categoryRepository.findById(categoryId);
+    return baseCategoryRepository.findById(categoryId);
   }
 
   public String deleteCategoryById(int categoryId) {
@@ -66,7 +76,7 @@ public class CategoryService {
     if (existProductForCategoryId) {
       return "Cannot delete category while products reference it";
     } else {
-      categoryRepository.deleteById(categoryId);
+      baseCategoryRepository.deleteById(categoryId);
       return "Successfully deleted the category: " + categoryId;
     }
 
@@ -79,10 +89,10 @@ public class CategoryService {
         categoryDB.setName(category.getName());
         categoryDB.setGroupId(category.getGroupId());
       }
-      categoryRepository.save(categoryDB);
+      baseCategoryRepository.save(categoryDB);
     } catch (NoSuchElementException e) {
       if (category.getName() != null && category.getName() != "" && category.getGroupId() != 0) {
-        categoryRepository.save(category);
+        baseCategoryRepository.save(category);
       } else {
         return "Please provide a valid category";
       }

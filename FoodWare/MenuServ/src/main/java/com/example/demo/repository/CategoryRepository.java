@@ -1,9 +1,11 @@
 package com.example.demo.repository;
 
 import com.example.demo.entity.Category;
-import org.springframework.data.repository.CrudRepository;
+import java.util.List;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CategoryRepository extends CrudRepository<Category, Integer> {
+public interface CategoryRepository extends org.springframework.data.repository.Repository<Category,Integer> {
+  List<Category> findCategoriesByGroupId(int groupId);
+
 }

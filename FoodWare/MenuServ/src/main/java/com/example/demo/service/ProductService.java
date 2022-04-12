@@ -1,6 +1,8 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.Category;
 import com.example.demo.entity.Product;
+import com.example.demo.repository.BaseProductRepository;
 import com.example.demo.repository.ImageRepository;
 import com.example.demo.repository.ProductRepository;
 import java.util.ArrayList;
@@ -17,7 +19,13 @@ import org.springframework.stereotype.Service;
 public class ProductService {
 
   @Autowired
+  BaseProductRepository baseProductRepository;
+
+  @Autowired
   ProductRepository productRepository;
+
+  @Autowired
+  CategoryService categoryService;
 
   @Autowired
   ImageRepository imageRepository;
@@ -31,7 +39,7 @@ public class ProductService {
 
   public String insertProduct(Product product) {
     try {
-      productRepository.save(product);
+      baseProductRepository.save(product);
     } catch (IllegalArgumentException e) {
       return "Please provide a valid product";
     }
@@ -41,18 +49,33 @@ public class ProductService {
 
   public List<Product> loadAllProducts() {
     List<Product> products = new ArrayList<>();
-    productRepository.findAll().forEach(products::add);
+    baseProductRepository.findAll().forEach(products::add);
+    return products;
+  }
+
+  public List<Product> loadAllProductsByCategoryId(int categoryId) {
+    List<Product> products = new ArrayList<>();
+    productRepository.findProductByCategoryIdOrderByName(categoryId).forEach(products::add);
+    return products;
+  }
+
+  public List<Product> loadAllProductsByGroupId(int groupId) {
+    List<Category> categoriesByGroup = categoryService.loadAllCategoriesByGroupId(groupId);
+    List<Product> products = new ArrayList<>();
+    for (Category category : categoriesByGroup) {
+      productRepository.findProductByCategoryIdOrderByName(category.getId()).forEach(products::add);
+    }
     return products;
   }
 
   public Optional<Product> loadProductById(int productId) {
-    return productRepository.findById(productId);
+    return baseProductRepository.findById(productId);
   }
 
   public String deleteProductById(int productId) {
     try {
-      int imageId = productRepository.findById(productId).get().getImageId();
-      productRepository.deleteById(productId);
+      int imageId = baseProductRepository.findById(productId).get().getImageId();
+      baseProductRepository.deleteById(productId);
       imageRepository.deleteById(imageId);
       return "Successfully deleted product with id " + productId;
     } catch (NoSuchElementException e) {
@@ -95,11 +118,11 @@ public class ProductService {
       } else {
         productDB.setImageId(product.getImageId());
       }
-      productRepository.save(productDB);
+      baseProductRepository.save(productDB);
     } catch (NoSuchElementException e) {
       if (product.getName() != null && product.getName() == "" && product.getPrice() != 0.0 &&
           product.getIsExtra() != null || product.getDescription() != null || product.getDescription() != "") {
-        productRepository.save(product);
+        baseProductRepository.save(product);
       } else {
         return "Please provide a valid product";
       }

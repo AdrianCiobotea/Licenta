@@ -2,7 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.entity.Category;
 import com.example.demo.entity.Group;
-import com.example.demo.repository.GroupRepository;
+import com.example.demo.repository.BaseGroupRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class GroupService {
   @Autowired
-  GroupRepository groupRepository;
+  BaseGroupRepository baseGroupRepository;
 
   @Autowired
   private CategoryService categoryService;
@@ -29,7 +29,7 @@ public class GroupService {
 
   public String insertGroup(Group group) {
     try {
-      groupRepository.save(group);
+      baseGroupRepository.save(group);
     } catch (IllegalArgumentException e) {
       return "Please provide a valid group";
     }
@@ -38,12 +38,12 @@ public class GroupService {
 
   public List<Group> loadAllGroups() {
     List<Group> groups = new ArrayList<>();
-    groupRepository.findAll().forEach(groups::add);
+    baseGroupRepository.findAll().forEach(groups::add);
     return groups;
   }
 
   public Optional<Group> loadGroupById(int groupId) {
-    return groupRepository.findById(groupId);
+    return baseGroupRepository.findById(groupId);
   }
 
   public String deleteGroupById(int groupId) {
@@ -58,7 +58,7 @@ public class GroupService {
     if (existCategoryForGroupId) {
       return "Cannot delete group while categories reference it";
     } else {
-      groupRepository.deleteById(groupId);
+      baseGroupRepository.deleteById(groupId);
       return "Successfully deleted the group: " + groupId;
     }
   }
@@ -69,7 +69,7 @@ public class GroupService {
       if (groupDB.isPresent()) {
         groupDB.get().setName(group.getName());
       }
-      groupRepository.save(groupDB.get());
+      baseGroupRepository.save(groupDB.get());
     } catch (IllegalArgumentException e) {
       return "Please provide a valid group";
     }
