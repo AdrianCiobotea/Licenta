@@ -1,13 +1,10 @@
 package com.example.demo.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,17 +14,19 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "order")
-public class Order {
+@Table(name = "shopping_item")
+public class ShoppingItem {
   @Id
   @GeneratedValue(
       strategy = GenerationType.IDENTITY
   )
   private int id;
-  @Column(nullable = false, name = "initiator_id")
-  private int initiator_id;
-  @ManyToMany(cascade = CascadeType.ALL)
-  @JoinColumn(name = "payment_id")
-  private int payment_id;
-}
+  @Column(nullable = false, name = "quantity")
+  private int quantity;
+  private int shoppingCart_id;
+  private int product_id;
+  private int user_id;
+  private int status_id;
+  private int parent_id;
 
+}
