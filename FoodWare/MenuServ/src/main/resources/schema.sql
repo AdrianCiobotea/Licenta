@@ -6,6 +6,8 @@ drop table if exists product;
 
 drop table if exists category;
 
+drop table if exists extra;
+
 drop table if exists cat_group;
 
 drop table if exists image;
@@ -27,6 +29,12 @@ create table category (
     group_id integer,
     primary key (id)) engine=InnoDB;
 
+create table extra (
+    id integer not null auto_increment,
+    name varchar(255) not null,
+    price double not null,
+    primary key (id)) engine=InnoDB;
+
 create table product (
     id integer not null auto_increment,
     name varchar(255) not null,
@@ -34,7 +42,6 @@ create table product (
     description varchar(255) not null,
     category_id integer not null,
     image_id integer,
-    is_extra bit not null,
     primary key (id)) engine=InnoDB;
 
 alter table category add constraint FK_group_id foreign key (group_id) references cat_group (id);
