@@ -28,6 +28,4 @@ public class Product {
   private Integer categoryId;
   @Column(name = "image_id")
   private Integer imageId;
-  @Column(name = "is_extra", nullable = false)
-  private Boolean isExtra;
 }

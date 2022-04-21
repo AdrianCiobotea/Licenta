@@ -108,11 +108,6 @@ public class ProductService {
       } else {
         productDB.setPrice(product.getPrice());
       }
-      if (product.getIsExtra() == null) {
-        productDB.setIsExtra(productDB.getIsExtra());
-      } else {
-        productDB.setIsExtra(product.getIsExtra());
-      }
       if (product.getImageId() == null) {
         productDB.setImageId(productDB.getImageId());
       } else {
@@ -121,7 +116,7 @@ public class ProductService {
       baseProductRepository.save(productDB);
     } catch (NoSuchElementException e) {
       if (product.getName() != null && product.getName() == "" && product.getPrice() != 0.0 &&
-          product.getIsExtra() != null || product.getDescription() != null || product.getDescription() != "") {
+          product.getDescription() != null && product.getDescription() != "") {
         baseProductRepository.save(product);
       } else {
         return "Please provide a valid product";

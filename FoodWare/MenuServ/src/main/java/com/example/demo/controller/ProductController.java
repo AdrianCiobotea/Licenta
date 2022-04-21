@@ -43,14 +43,12 @@ public class ProductController {
                                           @RequestParam(value = "categoryId", required = false) Optional<Integer> categoryId) {
     List<Product> products = new ArrayList<>();
     if (categoryId.isPresent()) {
-      productService.loadAllProductsByCategoryId(categoryId.get()).forEach(products::add);
+      products.addAll(productService.loadAllProductsByCategoryId(categoryId.get()));
     } else {
       if (groupId.isPresent()) {
-        productService.loadAllProductsByGroupId(groupId.get()).forEach(products::add);
+        products.addAll(productService.loadAllProductsByGroupId(groupId.get()));
       } else {
-        if (categoryId.isEmpty() && groupId.isEmpty()) {
-          productService.loadAllProducts().forEach(products::add);
-        }
+          products.addAll(productService.loadAllProducts());
       }
     }
     return products;

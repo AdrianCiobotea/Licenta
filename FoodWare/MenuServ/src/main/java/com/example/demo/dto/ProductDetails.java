@@ -15,5 +15,4 @@ public class ProductDetails {
   private Double price;
   private String description;
   private CategoryDetails category;
-  private Boolean extra;
 }

@@ -1,7 +1,7 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.ShoppingCart;
-import com.example.demo.repository.ShoppingCartRepository;
+import com.example.demo.entity.Order;
+import com.example.demo.repository.OrderRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -12,12 +12,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
-public class ShoppingCartService {
+public class OrderService {
   @Autowired
-  ShoppingCartRepository shoppingCartRepository;
+  OrderRepository shoppingCartRepository;
 
-  public Optional<ShoppingCart> insertShoppingCart(ShoppingCart shoppingCart) {
-    ShoppingCart shoppingCartDB;
+  public Optional<Order> insertOrder(Order shoppingCart) {
+    Order shoppingCartDB;
     try {
       shoppingCartDB = shoppingCartRepository.save(shoppingCart);
     } catch (IllegalArgumentException e) {
@@ -26,20 +26,20 @@ public class ShoppingCartService {
     return Optional.of(shoppingCartDB);
   }
 
-  public List<ShoppingCart> loadAllShoppingCarts() {
-    List<ShoppingCart> shoppingCarts = new ArrayList<>();
+  public List<Order> loadAllOrders() {
+    List<Order> shoppingCarts = new ArrayList<>();
     shoppingCartRepository.findAll().forEach(shoppingCarts::add);
     return shoppingCarts;
   }
 
-  public Optional<ShoppingCart> loadShoppingCartById(Integer shoppingCartId) {
+  public Optional<Order> loadOrderById(Integer shoppingCartId) {
     return shoppingCartRepository.findById(shoppingCartId);
   }
 
-  public String updateShoppingCart(ShoppingCart shoppingCart, Integer shoppingCartId) {
+  public String updateOrder(Order shoppingCart, Integer shoppingCartId) {
 
     try {
-      ShoppingCart shoppingCartDB = loadShoppingCartById(shoppingCartId).get();
+      Order shoppingCartDB = loadOrderById(shoppingCartId).get();
       if (shoppingCart.getInitiator_id() == 0) {
         shoppingCartDB.setInitiator_id(shoppingCartDB.getInitiator_id());
       } else {
@@ -56,17 +56,17 @@ public class ShoppingCartService {
       if (shoppingCart.getInitiator_id() != 0) {
         shoppingCartRepository.save(shoppingCart);
       } else {
-        return "Please provide a valid ShoppingCart";
+        return "Please provide a valid Order";
       }
     } catch (IllegalArgumentException e) {
-      return "Please provide a valid ShoppingCart";
+      return "Please provide a valid Order";
     }
-    return "Successfully updated the ShoppingCart";
+    return "Successfully updated the Order";
   }
 
-  public String deleteShoppingCartById(int shoppingCartId) {
+  public String deleteOrderById(int shoppingCartId) {
     shoppingCartRepository.deleteById(shoppingCartId);
-    return "Successfully deleted ShoppingCart with id " + shoppingCartId;
+    return "Successfully deleted Order with id " + shoppingCartId;
   }
 
 }
