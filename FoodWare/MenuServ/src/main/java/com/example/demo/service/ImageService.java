@@ -44,7 +44,7 @@ public class ImageService {
     int imageId = 0;
     try {
       Product product = productService.loadProductById(productId).get();
-      imageId = product.getImageId();
+      imageId = product.getImage().getId();
     } catch (NoSuchElementException e) {
       return null;
     }
@@ -63,8 +63,8 @@ public class ImageService {
     int imageId = 0;
     try {
       Product product = productService.loadProductById(productId).get();
-      imageId = product.getImageId();
-      product.setImageId(null);
+      imageId = product.getImage().getId();
+      product.setImage(null);
       productService.updateProduct(product, productId);
       imageRepository.deleteById(imageId);
     } catch (NoSuchElementException e) {

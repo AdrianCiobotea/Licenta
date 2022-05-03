@@ -14,17 +14,15 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "extra")
-public class Extra {
+@Table(name = "restaurant_sub_order")
+public class SubOrder {
   @Id
   @GeneratedValue(
       strategy = GenerationType.IDENTITY
   )
   private int id;
-  @Column(name = "name")
-  private String name;
-  @Column(name = "price")
-  private double price;
-  @Column(name = "category_id")
-  private int category_id;
+  @Column(nullable = false, name = "user_id")
+  private int user_id;
+  @Column(nullable = false, name = "payment_id")
+  private int payment_id;
 }

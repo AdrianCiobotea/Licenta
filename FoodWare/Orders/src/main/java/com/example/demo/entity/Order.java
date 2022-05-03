@@ -24,6 +24,7 @@ public class Order {
   @Column(nullable = false, name = "initiator_id")
   private int initiator_id;
   private int table_id;
+  private String order_status;
 
 }
 

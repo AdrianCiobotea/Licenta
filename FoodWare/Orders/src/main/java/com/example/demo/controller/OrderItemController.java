@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "shoppingItem")
+@RequestMapping(path = "orderItem")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class OrderItemController {
   @Autowired

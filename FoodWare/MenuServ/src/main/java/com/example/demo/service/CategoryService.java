@@ -7,6 +7,7 @@ import com.example.demo.repository.CategoryRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,9 +56,7 @@ public class CategoryService {
   }
 
   public List<Category> loadAllCategoriesByGroupId(int groupId) {
-    List<Category> categories = new ArrayList<>();
-    categoryRepository.findCategoriesByGroupId(groupId).forEach(categories::add);
-    return categories;
+    return new ArrayList<>(categoryRepository.findCategoriesByGroupId(groupId));
   }
 
   public Optional<Category> loadCategoryById(int categoryId) {
@@ -68,7 +67,7 @@ public class CategoryService {
     boolean existProductForCategoryId = false;
     List<Product> products = productService.loadAllProducts();
     for (Product product : products) {
-      if (product.getCategoryId() == categoryId) {
+      if (product.getCategory().getId() == categoryId) {
         existProductForCategoryId = true;
         break;
       }
@@ -83,22 +82,26 @@ public class CategoryService {
   }
 
   public String updateCategory(Category category, int id) {
-    try {
-      Category categoryDB = loadCategoryById(id).get();
-      if (categoryDB != null) {
+
+    if (loadCategoryById(id).isPresent()) {
+      try {
+        Category categoryDB = loadCategoryById(id).get();
         categoryDB.setName(category.getName());
         categoryDB.setGroupId(category.getGroupId());
-      }
-      baseCategoryRepository.save(categoryDB);
-    } catch (NoSuchElementException e) {
-      if (category.getName() != null && category.getName() != "" && category.getGroupId() != 0) {
-        baseCategoryRepository.save(category);
-      } else {
+        baseCategoryRepository.save(categoryDB);
+      } catch (NoSuchElementException e) {
+        if (category.getName() != null && !Objects.equals(category.getName(), "") && category.getGroupId() != 0) {
+          baseCategoryRepository.save(category);
+        } else {
+          return "Please provide a valid category";
+        }
+      } catch (IllegalArgumentException e) {
         return "Please provide a valid category";
       }
-    } catch (IllegalArgumentException e) {
-      return "Please provide a valid category";
+      return "Successfully updated the category";
+    } else {
+      return "No such category found";
     }
-    return "Successfully updated the category";
   }
+
 }

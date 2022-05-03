@@ -23,9 +23,10 @@ public class Product {
   private double price;
   @Column(nullable = false, name = "description")
   private String description;
-  //@ManyToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "category_id", nullable = false)
-  private Integer categoryId;
-  @Column(name = "image_id")
-  private Integer imageId;
+  @ManyToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "category_id", nullable = false,referencedColumnName = "id")
+  private Category category;
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "image_id",referencedColumnName = "id")
+  private Image image;
 }

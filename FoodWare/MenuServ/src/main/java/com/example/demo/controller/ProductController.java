@@ -1,8 +1,10 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.Image;
 import com.example.demo.entity.Product;
 import com.example.demo.service.ImageService;
 import com.example.demo.service.ProductService;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +35,12 @@ public class ProductController {
 
   @PostMapping(path = "insert", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
   public String addProduct(@RequestPart Product product, @RequestPart MultipartFile image) {
-    int imageId = imageService.insertImage(image);
-    product.setImageId(imageId);
+    imageService.insertImage(image);
+    try {
+      product.setImage(new Image(image.getBytes()));
+    } catch (IOException e) {
+      return "Could not insert image";
+    }
     return productService.insertProduct(product);
   }
 
@@ -48,7 +54,7 @@ public class ProductController {
       if (groupId.isPresent()) {
         products.addAll(productService.loadAllProductsByGroupId(groupId.get()));
       } else {
-          products.addAll(productService.loadAllProducts());
+        products.addAll(productService.loadAllProducts());
       }
     }
     return products;

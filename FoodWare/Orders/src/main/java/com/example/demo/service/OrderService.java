@@ -14,12 +14,12 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class OrderService {
   @Autowired
-  OrderRepository shoppingCartRepository;
+  OrderRepository orderRepository;
 
   public Optional<Order> insertOrder(Order shoppingCart) {
     Order shoppingCartDB;
     try {
-      shoppingCartDB = shoppingCartRepository.save(shoppingCart);
+      shoppingCartDB = orderRepository.save(shoppingCart);
     } catch (IllegalArgumentException e) {
       return Optional.empty();
     }
@@ -28,33 +28,28 @@ public class OrderService {
 
   public List<Order> loadAllOrders() {
     List<Order> shoppingCarts = new ArrayList<>();
-    shoppingCartRepository.findAll().forEach(shoppingCarts::add);
+    orderRepository.findAll().forEach(shoppingCarts::add);
     return shoppingCarts;
   }
 
   public Optional<Order> loadOrderById(Integer shoppingCartId) {
-    return shoppingCartRepository.findById(shoppingCartId);
+    return orderRepository.findById(shoppingCartId);
   }
 
-  public String updateOrder(Order shoppingCart, Integer shoppingCartId) {
+  public String updateOrder(Order order, Integer orderId) {
 
     try {
-      Order shoppingCartDB = loadOrderById(shoppingCartId).get();
-      if (shoppingCart.getInitiator_id() == 0) {
-        shoppingCartDB.setInitiator_id(shoppingCartDB.getInitiator_id());
+      Order orderDB = loadOrderById(orderId).get();
+      if (order.getInitiator_id() == 0) {
+        orderDB.setInitiator_id(orderDB.getInitiator_id());
       } else {
-        shoppingCartDB.setInitiator_id(shoppingCart.getInitiator_id());
+        orderDB.setInitiator_id(order.getInitiator_id());
       }
-//      if (shoppingCart.getPayment_id() == 0) {
-//        shoppingCartDB.setPayment_id(shoppingCartDB.getPayment_id());
-//      } else {
-//        shoppingCartDB.setPayment_id(shoppingCart.getPayment_id());
-//      }
 
-      shoppingCartRepository.save(shoppingCartDB);
+      orderRepository.save(orderDB);
     } catch (NoSuchElementException e) {
-      if (shoppingCart.getInitiator_id() != 0) {
-        shoppingCartRepository.save(shoppingCart);
+      if (order.getInitiator_id() != 0) {
+        orderRepository.save(order);
       } else {
         return "Please provide a valid Order";
       }
@@ -65,7 +60,7 @@ public class OrderService {
   }
 
   public String deleteOrderById(int shoppingCartId) {
-    shoppingCartRepository.deleteById(shoppingCartId);
+    orderRepository.deleteById(shoppingCartId);
     return "Successfully deleted Order with id " + shoppingCartId;
   }
 

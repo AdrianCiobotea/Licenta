@@ -74,7 +74,7 @@ public class ProductService {
 
   public String deleteProductById(int productId) {
     try {
-      int imageId = baseProductRepository.findById(productId).get().getImageId();
+      int imageId = baseProductRepository.findById(productId).get().getImage().getId();
       baseProductRepository.deleteById(productId);
       imageRepository.deleteById(imageId);
       return "Successfully deleted product with id " + productId;
@@ -88,10 +88,10 @@ public class ProductService {
   public String updateProduct(Product product, int id) {
     try {
       Product productDB = loadProductById(id).get();
-      if (product.getCategoryId() == 0) {
-        productDB.setCategoryId(productDB.getCategoryId());
+      if (product.getCategory() != null) {
+        productDB.setCategory(productDB.getCategory());
       } else {
-        productDB.setCategoryId(product.getCategoryId());
+        productDB.setCategory(product.getCategory());
       }
       if (product.getDescription() == null || product.getDescription() == "") {
         productDB.setDescription(productDB.getDescription());
@@ -108,10 +108,10 @@ public class ProductService {
       } else {
         productDB.setPrice(product.getPrice());
       }
-      if (product.getImageId() == null) {
-        productDB.setImageId(productDB.getImageId());
+      if (product.getImage() == null) {
+        productDB.setImage(productDB.getImage());
       } else {
-        productDB.setImageId(product.getImageId());
+        productDB.setImage(product.getImage());
       }
       baseProductRepository.save(productDB);
     } catch (NoSuchElementException e) {
