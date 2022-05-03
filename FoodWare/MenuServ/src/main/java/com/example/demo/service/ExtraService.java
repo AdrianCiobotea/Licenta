@@ -50,10 +50,10 @@ public class ExtraService {
   public String updateExtra(Extra extra, int id) {
     try {
       Extra extraDB = loadExtraById(id).get();
-      if (extra.getCategory_id() == 0) {
-        extraDB.setCategory_id(extraDB.getCategory_id());
+      if (extra.getCategory() != null) {
+        extraDB.setCategory(extraDB.getCategory());
       } else {
-        extraDB.setCategory_id(extra.getCategory_id());
+        extraDB.setCategory(extra.getCategory());
       }
       if (extra.getName() == null) {
         extraDB.setName(extraDB.getName());
@@ -67,7 +67,7 @@ public class ExtraService {
       }
       baseExtraRepository.save(extraDB);
     } catch (NoSuchElementException e) {
-      if (extra.getName() != null && extra.getPrice() != 0.0 && extra.getCategory_id() != 0) {
+      if (extra.getName() != null && extra.getPrice() != 0.0 && extra.getCategory() != null) {
         baseExtraRepository.save(extra);
       } else {
         return "Please provide a valid extra product";

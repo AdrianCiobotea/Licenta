@@ -87,10 +87,10 @@ public class CategoryService {
       try {
         Category categoryDB = loadCategoryById(id).get();
         categoryDB.setName(category.getName());
-        categoryDB.setGroupId(category.getGroupId());
+        categoryDB.setGroup(category.getGroup());
         baseCategoryRepository.save(categoryDB);
       } catch (NoSuchElementException e) {
-        if (category.getName() != null && !Objects.equals(category.getName(), "") && category.getGroupId() != 0) {
+        if (category.getName() != null && !Objects.equals(category.getName(), "") && category.getGroup() != null) {
           baseCategoryRepository.save(category);
         } else {
           return "Please provide a valid category";

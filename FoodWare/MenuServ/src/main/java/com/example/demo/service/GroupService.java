@@ -50,7 +50,7 @@ public class GroupService {
     boolean existCategoryForGroupId = false;
     List<Category> categories = categoryService.loadAllCategories();
     for (Category category : categories) {
-      if (category.getGroupId() == groupId) {
+      if (category.getGroup().getId() == groupId) {
         existCategoryForGroupId = true;
         break;
       }
@@ -66,9 +66,7 @@ public class GroupService {
   public String updateGroup(Group group, int id) {
     try {
       Optional<Group> groupDB = loadGroupById(id);
-      if (groupDB.isPresent()) {
-        groupDB.get().setName(group.getName());
-      }
+      groupDB.ifPresent(value -> value.setName(group.getName()));
       baseGroupRepository.save(groupDB.get());
     } catch (IllegalArgumentException e) {
       return "Please provide a valid group";

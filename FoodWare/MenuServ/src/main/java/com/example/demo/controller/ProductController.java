@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.Image;
 import com.example.demo.entity.Product;
+import com.example.demo.service.CategoryService;
 import com.example.demo.service.ImageService;
 import com.example.demo.service.ProductService;
 import java.io.IOException;
@@ -29,14 +30,17 @@ public class ProductController {
 
   @Autowired
   ProductService productService;
+  @Autowired
+  CategoryService categoryService;
 
   @Autowired
   ImageService imageService;
 
   @PostMapping(path = "insert", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
   public String addProduct(@RequestPart Product product, @RequestPart MultipartFile image) {
-    imageService.insertImage(image);
+    int imageId = imageService.insertImage(image);
     try {
+      product.setCategory(categoryService.loadCategoryById(product.getCategory().getId()).get());
       product.setImage(new Image(image.getBytes()));
     } catch (IOException e) {
       return "Could not insert image";

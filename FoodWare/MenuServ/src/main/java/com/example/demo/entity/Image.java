@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +22,8 @@ public class Image {
       strategy = GenerationType.IDENTITY
   )
   private int id;
-  @Column(name = "image")
+  @Lob
+  @Column(name = "image",columnDefinition = "MEDIUMBLOB")
   private byte[] image;
 
   public Image(byte[] image) {
