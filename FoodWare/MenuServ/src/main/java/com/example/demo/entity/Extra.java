@@ -25,4 +25,6 @@ public class Extra {
   private String name;
   @Column(name = "price")
   private double price;
+  @Column(name = "category_id")
+  private int categoryId;
 }

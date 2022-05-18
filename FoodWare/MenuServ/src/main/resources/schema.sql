@@ -33,6 +33,7 @@ create table extra (
     id integer not null auto_increment,
     name varchar(255) not null,
     price double not null,
+    category_id integer not null,
     primary key (id)) engine=InnoDB;
 
 create table product (

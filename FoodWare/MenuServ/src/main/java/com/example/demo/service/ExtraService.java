@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.entity.Extra;
 import com.example.demo.repository.BaseExtraRepository;
+import com.example.demo.repository.ExtraRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -15,6 +16,9 @@ import org.springframework.stereotype.Service;
 public class ExtraService {
   @Autowired
   BaseExtraRepository baseExtraRepository;
+
+  @Autowired
+  ExtraRepository extraRepository;
 
   public String insertExtra(Extra extra) {
     try {
@@ -34,6 +38,10 @@ public class ExtraService {
 
   public Optional<Extra> loadExtraById(int extraId) {
     return baseExtraRepository.findById(extraId);
+  }
+
+  public List<Extra> loadExtrasByCategoryId (int categoryId){
+    return extraRepository.findExtrasByCategoryId(categoryId);
   }
 
   public String deleteExtraById(int extraId) {
@@ -60,9 +68,14 @@ public class ExtraService {
       } else {
         extraDB.setPrice(extra.getPrice());
       }
+      if (extra.getCategoryId() != 0) {
+        extraDB.setCategoryId(extraDB.getCategoryId());
+      } else {
+        extraDB.setCategoryId(extra.getCategoryId());
+      }
       baseExtraRepository.save(extraDB);
     } catch (NoSuchElementException e) {
-      if (extra.getName() != null && extra.getPrice() != 0.0) {
+      if (extra.getName() != null && extra.getPrice() != 0.0 && extra.getCategoryId() != 0) {
         baseExtraRepository.save(extra);
       } else {
         return "Please provide a valid extra product";

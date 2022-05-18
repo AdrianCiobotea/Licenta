@@ -33,7 +33,7 @@ INSERT INTO product (name,price,description,category_id) VALUES
 ('Espresso','12','really strong','5'),
 ('Irish','20','contains whiskey and cream','5');
 
-INSERT INTO extra (name,price) VALUES
-('Garlic Sauce','5'),
-('Tomato Sauce','5'),
-('Hot Sauce','5');
+INSERT INTO extra (name,price,category_id) VALUES
+('Garlic Sauce','5','1'),
+('Tomato Sauce','5','1'),
+('Hot Sauce','5','1');
