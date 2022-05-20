@@ -88,7 +88,7 @@ public class ProductService {
   public String updateProduct(Product product, int id) {
     try {
       Product productDB = loadProductById(id).get();
-      if (product.getCategoryId() == 0) {
+      if (product.getCategoryId() == null) {
         productDB.setCategoryId(productDB.getCategoryId());
       } else {
         productDB.setCategoryId(product.getCategoryId());

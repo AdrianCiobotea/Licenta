@@ -27,40 +27,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().
-                cors().configurationSource(new CorsConfigurationSource() {
-                    @Override
-                    public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
-                        CorsConfiguration config = new CorsConfiguration();
-                        config.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
-                        config.setAllowedMethods(Collections.singletonList("*"));
-                        config.setAllowCredentials(true);
-                        config.setAllowedHeaders(Collections.singletonList("*"));
-                        config.setExposedHeaders(Arrays.asList("Authorization"));
-                        config.setMaxAge(3600L);
-                        return config;
-                    }
-                }).and().csrf().disable()
-                .addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
-                .addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class)
-                .addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class)
-                .authorizeRequests()
-<<<<<<< Updated upstream
-                .antMatchers("/myAccount").hasRole("USER")
-                .antMatchers("/myBalance").hasAnyRole("USER","ADMIN")
-                .antMatchers("/myLoans").hasRole("ROOT")
-                .antMatchers("/myCards").hasAnyRole("USER","ADMIN")
-                .antMatchers("/user").authenticated()
-                .antMatchers("/notices").permitAll()
-                .antMatchers("/contact").permitAll().and().httpBasic();
-=======
-                //.antMatchers("/login/**").permitAll()
-                    .antMatchers("/register/**")
-                    .permitAll()
-                .anyRequest()
-                .authenticated().and()
-                .formLogin();
->>>>>>> Stashed changes
-    }
+        http.authorizeRequests().antMatchers("/","/login").permitAll().anyRequest().authenticated().and().bas
 
 }
