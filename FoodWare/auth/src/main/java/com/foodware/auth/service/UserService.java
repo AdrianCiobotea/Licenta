@@ -1,72 +1,78 @@
 package com.foodware.auth.service;
 
-import com.foodware.auth.entity.User;
-import com.foodware.auth.exception.InvalidCredentialsException;
-import com.foodware.auth.exception.UnknownIdentifierException;
-import com.foodware.auth.exception.UserAlreadyExistException;
-import com.foodware.auth.repository.BaseUserRepository;
+import com.foodware.auth.config.security.TokenProvider;
+import com.foodware.auth.entity.AuthToken;
+import com.foodware.auth.entity.user.Role;
+import com.foodware.auth.entity.user.User;
 import com.foodware.auth.repository.UserRepository;
+import java.util.Collections;
+import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 @Slf4j
-public class UserService {
-    @Value("${spring.datasource.password}")
-    private String databasePassword;
-    @Value("${spring.datasource.username}")
-    private String databaseUserName;
-    @Value("${spring.datasource.url}")
-    private String databaseUrl;
+public class UserService implements UserDetailsService {
 
-    @Autowired
-    BCryptPasswordEncoder bCryptPasswordEncoder;
+  @Value("${spring.datasource.password}")
+  private String databasePassword;
+  @Value("${spring.datasource.username}")
+  private String databaseUserName;
+  @Value("${spring.datasource.url}")
+  private String databaseUrl;
 
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    BaseUserRepository baseUserRepository;
+  private BCryptPasswordEncoder bCryptPasswordEncoder;
+  private AuthenticationManager authenticationManager;
+  private UserRepository userRepository;
+  private TokenProvider tokenProvider;
 
-    public String register(User user) throws UserAlreadyExistException {
-        if (checkIfUserExist(user.getPhoneNumber())) {
-            throw new UserAlreadyExistException("User already exists for this email");
-        }
-        User userEntity = new User();
-        BeanUtils.copyProperties(user, userEntity);
-        encodePassword(userEntity);
-        baseUserRepository.save(userEntity);
-        return "Successfully registered user";
+  @Autowired
+  public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder,
+                     AuthenticationManager authenticationManager, TokenProvider tokenProvider) {
+    this.userRepository = userRepository;
+    this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    this.authenticationManager = authenticationManager;
+    this.tokenProvider = tokenProvider;
+  }
+
+  @Override
+  public UserDetails loadUserByUsername(String phoneNumber) throws UsernameNotFoundException {
+    User user = userRepository.findUserByPhoneNumber(phoneNumber);
+    if (user == null) {
+      throw new UsernameNotFoundException("Invalid username or password.");
     }
+    return new org.springframework.security.core.userdetails.User(user.getPhoneNumber(), user.getPassword(),
+        getAuthority(user));
+  }
 
-    public boolean checkIfUserExist(String phoneNumber) {
-        return userRepository.findUserByPhoneNumber(phoneNumber) != null;
-    }
+  public User registerUser(String phoneNumber, String password) {
+    User user = new User();
+    user.setPhoneNumber(phoneNumber);
+    user.setPassword(bCryptPasswordEncoder.encode(password));
+    user.setUserRole(Role.CLIENT);
+    return userRepository.save(user);
+  }
 
-    public Optional<User> getUserById(Integer id) throws UnknownIdentifierException {
-        return baseUserRepository.findById(id);
-    }
+  private Set<SimpleGrantedAuthority> getAuthority(User user) {
+    return Collections.singleton(new SimpleGrantedAuthority(user.getUserRole().authority()));
+  }
 
-    private void encodePassword(User userEntity) {
-        userEntity.setPassword(bCryptPasswordEncoder.encode(userEntity.getPassword()));
-    }
-
-
-    public String login(User user) throws InvalidCredentialsException {
-        User userDB = userRepository.findUserByPhoneNumber(user.getPhoneNumber());
-        if (userDB != null) {
-            if (bCryptPasswordEncoder.matches(user.getPassword(), userDB.getPassword())) {
-                return "authenticated";
-            } else {
-                throw new InvalidCredentialsException("invalid credentials");
-            }
-        } else {
-            return "no such user in the database";
-        }
-    }
+  public AuthToken login(String phoneNumber, String password) {
+    Authentication authentication =
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(phoneNumber, password));
+    SecurityContextHolder.getContext().setAuthentication(authentication);
+    String token = tokenProvider.generateToken(authentication);
+    return new AuthToken(token);
+  }
 }

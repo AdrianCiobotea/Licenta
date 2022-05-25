@@ -1,9 +1,10 @@
 package com.foodware.auth.repository;
 
-import com.foodware.auth.entity.User;
+import com.foodware.auth.entity.user.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends org.springframework.data.repository.Repository<User, Integer> {
-    User findUserByPhoneNumber(String phoneNumber);
+public interface UserRepository extends JpaRepository<User, Integer> {
+  User findUserByPhoneNumber(String phoneNumber);
 }
