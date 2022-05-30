@@ -26,17 +26,17 @@ public class TokenProvider {
   @Value("${jwt.token.secret}")
   public String jwtTokenSecret;
 
+
   public String generateToken(Authentication authentication) {
-    final String authorities = authentication.getAuthorities().stream()
-        .map(GrantedAuthority::getAuthority)
-        .collect(Collectors.joining(","));
+//    final String authorities = authentication.getAuthorities().stream()
+//        .map(GrantedAuthority::getAuthority)
+//        .collect(Collectors.joining(","));
     return Jwts.builder()
         .setSubject(authentication.getName())
-        .claim("scopes", authorities)
-        .signWith(SignatureAlgorithm.HS256, jwtTokenSecret)
         .setIssuedAt(java.sql.Date.from(Instant.now()))
         .setExpiration(Date.from(Instant.now().plus(5,
             ChronoUnit.HOURS)))
+        .signWith(SignatureAlgorithm.HS256, jwtTokenSecret)
         .compact();
   }
 

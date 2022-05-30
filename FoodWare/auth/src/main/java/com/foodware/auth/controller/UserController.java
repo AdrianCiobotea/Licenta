@@ -20,7 +20,7 @@ public class UserController {
   UserService userService;
 
   @PostMapping(path = "register")
-  public User registerUser(@RequestBody UserRequest userRequest) {
+  public String registerUser(@RequestBody UserRequest userRequest) {
     return userService.registerUser(userRequest.getPhoneNumber(), userRequest.getPassword());
   }
 

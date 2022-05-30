@@ -31,9 +31,11 @@ public class ProductController {
   ImageService imageService;
 
   @PostMapping(path = "insert", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-  public String addProduct(@RequestPart Product product, @RequestPart MultipartFile image) {
-    int imageId = imageService.insertImage(image);
-    product.setImageId(imageId);
+  public String addProduct(@RequestPart Product product, @RequestPart(required = false) MultipartFile image) {
+    if (image!=null) {
+      int imageId = imageService.insertImage(image);
+      product.setImageId(imageId);
+    }
     return productService.insertProduct(product);
   }
 
@@ -47,7 +49,7 @@ public class ProductController {
       if (groupId.isPresent()) {
         products.addAll(productService.loadAllProductsByGroupId(groupId.get()));
       } else {
-          products.addAll(productService.loadAllProducts());
+        products.addAll(productService.loadAllProducts());
       }
     }
     return products;
@@ -59,9 +61,9 @@ public class ProductController {
   }
 
   @PostMapping(path = "update/{id}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-  public String updateProduct(@PathVariable Integer id,@RequestPart Product product, @RequestPart(required = false) MultipartFile image) {
-      int imageId = imageService.insertImage(image);
-      product.setImageId(imageId);
+  public String updateProduct(@PathVariable Integer id, @RequestPart Product product, @RequestPart(required = false) MultipartFile image) {
+    int imageId = imageService.insertImage(image);
+    product.setImageId(imageId);
     return productService.updateProduct(product, id);
   }
 

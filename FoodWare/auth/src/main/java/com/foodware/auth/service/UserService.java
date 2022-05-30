@@ -56,12 +56,13 @@ public class UserService implements UserDetailsService {
         getAuthority(user));
   }
 
-  public User registerUser(String phoneNumber, String password) {
+  public String registerUser(String phoneNumber, String password) {
     User user = new User();
     user.setPhoneNumber(phoneNumber);
     user.setPassword(bCryptPasswordEncoder.encode(password));
     user.setUserRole(Role.CLIENT);
-    return userRepository.save(user);
+    userRepository.save(user);
+    return "Success";
   }
 
   private Set<SimpleGrantedAuthority> getAuthority(User user) {
