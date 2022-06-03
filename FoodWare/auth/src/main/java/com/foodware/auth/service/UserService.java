@@ -10,6 +10,8 @@ import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -50,19 +52,22 @@ public class UserService implements UserDetailsService {
   public UserDetails loadUserByUsername(String phoneNumber) throws UsernameNotFoundException {
     User user = userRepository.findUserByPhoneNumber(phoneNumber);
     if (user == null) {
-      throw new UsernameNotFoundException("Invalid username or password.");
+      return null;
     }
     return new org.springframework.security.core.userdetails.User(user.getPhoneNumber(), user.getPassword(),
         getAuthority(user));
   }
 
-  public String registerUser(String phoneNumber, String password) {
+  public ResponseEntity<String> registerUser(String phoneNumber, String password) {
+    if (loadUserByUsername(phoneNumber) != null) {
+      return ResponseEntity.status(HttpStatus.CONFLICT).body("Phone number already exists");
+    }
     User user = new User();
     user.setPhoneNumber(phoneNumber);
     user.setPassword(bCryptPasswordEncoder.encode(password));
     user.setUserRole(Role.CLIENT);
     userRepository.save(user);
-    return "Success";
+    return ResponseEntity.status(HttpStatus.CREATED).body("Account successfully created");
   }
 
   private Set<SimpleGrantedAuthority> getAuthority(User user) {
