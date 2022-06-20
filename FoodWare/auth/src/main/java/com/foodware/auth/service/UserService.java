@@ -59,6 +59,9 @@ public class UserService implements UserDetailsService {
   }
 
   public ResponseEntity<String> registerUser(String phoneNumber, String password) {
+    if (phoneNumber == null || password == null) {
+      return null;
+    }
     if (loadUserByUsername(phoneNumber) != null) {
       return ResponseEntity.status(HttpStatus.CONFLICT).body("Phone number already exists");
     }
@@ -75,10 +78,14 @@ public class UserService implements UserDetailsService {
   }
 
   public AuthToken login(String phoneNumber, String password) {
-    Authentication authentication =
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(phoneNumber, password));
-    SecurityContextHolder.getContext().setAuthentication(authentication);
-    String token = tokenProvider.generateToken(authentication);
-    return new AuthToken(token);
+    if(loadUserByUsername(phoneNumber)!=null){
+      Authentication authentication =
+          authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(phoneNumber, password));
+      SecurityContextHolder.getContext().setAuthentication(authentication);
+      String token = tokenProvider.generateToken(authentication);
+      return new AuthToken(token);
+    }else{
+      return null;
+    }
   }
 }

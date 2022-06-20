@@ -25,4 +25,6 @@ public class SubOrder {
   private int payment_id;
   @Column(nullable = false, name = "status_id")
   private int status_id;
+  @Column(nullable = false, name = "user_id")
+  private int user_id;
 }
