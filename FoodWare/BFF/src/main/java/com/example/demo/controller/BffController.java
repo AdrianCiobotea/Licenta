@@ -28,13 +28,5 @@ public class BffController {
     }
     return null;
   }
-  @GetMapping(path = "menu")
-  public String redirectMenu() {
-    try {
-      return OkHttp.getRequest("http://localhost:8084/menu");
-    } catch (IOException e) {
-      System.out.println("could not parse the response");
-    }
-    return null;
-  }
+
 }
