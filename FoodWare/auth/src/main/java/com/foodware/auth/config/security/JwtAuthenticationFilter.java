@@ -49,6 +49,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
       if (userDetails == null) {
         logger.debug("Could not find user in database");
         chain.doFilter(request, response);
+        return;
       }
       if (tokenProvider.validateToken(token, userDetails)) {
         UsernamePasswordAuthenticationToken authentication = tokenProvider.getAuthentication(token,
