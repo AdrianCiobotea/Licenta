@@ -33,32 +33,32 @@ public class OrderItemService {
   public String updateOrderItem(OrderItem orderItem, Integer orderItemId) {
     try {
       OrderItem orderItemDB = loadOrderItemById(orderItemId).get();
-      if (orderItem.getProduct_id() == 0) {
-        orderItemDB.setProduct_id(orderItemDB.getProduct_id());
+      if (orderItem.getProductId() == 0) {
+        orderItemDB.setProductId(orderItemDB.getProductId());
       } else {
-        orderItemDB.setProduct_id(orderItem.getProduct_id());
+        orderItemDB.setProductId(orderItem.getProductId());
       }
-      if (orderItem.getSub_order_id() == 0) {
-        orderItemDB.setSub_order_id(orderItemDB.getSub_order_id());
+      if (orderItem.getSubOrderId() == 0) {
+        orderItemDB.setSubOrderId(orderItemDB.getSubOrderId());
       } else {
-        orderItemDB.setSub_order_id(orderItem.getSub_order_id());
+        orderItemDB.setSubOrderId(orderItem.getSubOrderId());
       }
       if (orderItem.getQuantity() == 0) {
         orderItemDB.setQuantity(orderItemDB.getQuantity());
       } else {
         orderItemDB.setQuantity(orderItem.getQuantity());
       }
-      if (orderItem.getStatus_id() == 0) {
-        orderItemDB.setStatus_id(orderItemDB.getStatus_id());
+      if (orderItem.getStatusId() == 0) {
+        orderItemDB.setStatusId(orderItemDB.getStatusId());
       } else {
-        orderItemDB.setStatus_id(orderItem.getStatus_id());
+        orderItemDB.setStatusId(orderItem.getStatusId());
       }
       orderItemRepository.save(orderItemDB);
     } catch (NoSuchElementException e) {
-      if (orderItem.getSub_order_id() != 0
+      if (orderItem.getSubOrderId() != 0
           && orderItem.getQuantity() != 0
-          && orderItem.getStatus_id() != 0
-          && orderItem.getProduct_id() != 0) {
+          && orderItem.getStatusId() != 0
+          && orderItem.getProductId() != 0) {
         orderItemRepository.save(orderItem);
       } else {
         return "Please provide a valid shopping item";

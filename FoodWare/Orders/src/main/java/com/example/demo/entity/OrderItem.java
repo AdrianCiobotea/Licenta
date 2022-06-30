@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,8 +24,13 @@ public class OrderItem {
   private int id;
   @Column(nullable = false, name = "quantity")
   private int quantity;
-  private int sub_order_id;
-  private int product_id;
-  private int status_id;
+  @Column(name = "sub_order_id")
+  private int subOrderId;
+  @Column(name = "product_id")
+  private int productId;
+  @Column(name = "status_id")
+  private int statusId;
+  private List<Integer> extraIdList;
+  //create list of extraIds as list of strings which are saved as one to many in the database
 
 }
