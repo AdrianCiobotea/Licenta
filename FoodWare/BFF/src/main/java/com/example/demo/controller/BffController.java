@@ -1,10 +1,10 @@
 package com.example.demo.controller;
 
+import com.example.demo.util.OkHttp;
 import java.io.IOException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import util.OkHttp;
 
 @RestController
 @RequestMapping(path = "access")

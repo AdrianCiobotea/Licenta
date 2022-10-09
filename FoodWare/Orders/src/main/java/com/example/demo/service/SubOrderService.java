@@ -38,19 +38,19 @@ public class SubOrderService {
 
     try {
       SubOrder subOrderDB = loadSubOrderById(subOrderId).get();
-      if (subOrder.getStatus_id() == 0) {
-        subOrderDB.setStatus_id(subOrderDB.getStatus_id());
+      if (subOrder.getStatusId() == 0) {
+        subOrderDB.setStatusId(subOrderDB.getStatusId());
       } else {
-        subOrderDB.setStatus_id(subOrder.getStatus_id());
+        subOrderDB.setStatusId(subOrder.getStatusId());
       }
-      if (subOrder.getPayment_id() == 0) {
-        subOrderDB.setPayment_id(subOrderDB.getPayment_id());
+      if (subOrder.getPaymentId() == 0) {
+        subOrderDB.setPaymentId(subOrderDB.getPaymentId());
       } else {
-        subOrderDB.setPayment_id(subOrder.getPayment_id());
+        subOrderDB.setPaymentId(subOrder.getPaymentId());
       }
       subOrderRepository.save(subOrderDB);
     } catch (NoSuchElementException e) {
-      if (subOrder.getStatus_id() != 0 && subOrder.getPayment_id() != 0) {
+      if (subOrder.getStatusId() != 0 && subOrder.getPaymentId() != 0) {
         subOrderRepository.save(subOrder);
       } else {
         return "Please provide a valid SubOrder";

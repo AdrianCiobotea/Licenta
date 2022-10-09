@@ -1,8 +1,10 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.Order;
 import com.example.demo.entity.OrderItem;
 import com.example.demo.service.OrderItemService;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,8 +22,8 @@ public class OrderItemController {
   OrderItemService shoppingItemService;
 
   @PostMapping(path = "insert")
-  public String addOrderItem(@RequestBody OrderItem shoppingItem) {
-    return shoppingItemService.insertOrderItem(shoppingItem);
+  public Optional<OrderItem> addOrderItem(@RequestBody OrderItem shoppingItem) {
+    return Optional.ofNullable(shoppingItemService.insertOrderItem(shoppingItem));
   }
 
   @GetMapping()

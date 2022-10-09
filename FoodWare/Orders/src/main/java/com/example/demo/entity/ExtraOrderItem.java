@@ -23,4 +23,6 @@ public class ExtraOrderItem {
   private int id;
   @Column(nullable = false, name = "order_item_id")
   private int orderItemId;
+  @Column(nullable = false, name = "extra_id")
+  private int extraId;
 }

@@ -23,9 +23,6 @@ public class TokenProvider {
 
 
     public String generateToken(Authentication authentication) {
-//    final String authorities = authentication.getAuthorities().stream()
-//        .map(GrantedAuthority::getAuthority)
-//        .collect(Collectors.joining(","));
         return Jwts.builder()
                 .setSubject(authentication.getName())
                 .setIssuedAt(java.sql.Date.from(Instant.now()))

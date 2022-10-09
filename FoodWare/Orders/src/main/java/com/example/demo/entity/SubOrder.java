@@ -22,9 +22,9 @@ public class SubOrder {
   )
   private int id;
   @Column(nullable = false, name = "payment_id")
-  private int payment_id;
+  private int paymentId;
   @Column(nullable = false, name = "status_id")
-  private int status_id;
+  private int statusId;
   @Column(nullable = false, name = "user_id")
-  private int user_id;
+  private int userId;
 }

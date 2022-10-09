@@ -22,8 +22,8 @@ public class Order {
   )
   private int id;
   @Column(nullable = false, name = "initiator_id")
-  private int initiator_id;
-  private int table_id;
+  private int initiatorId;
+  private int tableId;
 
 }
 

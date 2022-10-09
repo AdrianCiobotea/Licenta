@@ -17,13 +17,12 @@ public class OrderItemService {
   @Autowired
   OrderItemRepository orderItemRepository;
 
-  public String insertOrderItem(OrderItem orderItem) {
+  public OrderItem insertOrderItem(OrderItem orderItem) {
     try {
-      orderItemRepository.save(orderItem);
+      return orderItemRepository.save(orderItem);
     } catch (IllegalArgumentException e) {
-      return "Please provide a valid shopping item";
+      return null;
     }
-    return "Successfully inserted an shopping item";
   }
 
   public Optional<OrderItem> loadOrderItemById(Integer orderItemId) {

@@ -1,11 +1,14 @@
 package com.example.demo.entity;
 
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,7 +33,9 @@ public class OrderItem {
   private int productId;
   @Column(name = "status_id")
   private int statusId;
-  private List<Integer> extraIdList;
-  //create list of extraIds as list of strings which are saved as one to many in the database
+  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+  @JoinColumn(name = "id")
+  private List<ExtraOrderItem> extraOrderItems;
+  //create list of extra order items as list of strings which are saved as one to many in the database
 
 }

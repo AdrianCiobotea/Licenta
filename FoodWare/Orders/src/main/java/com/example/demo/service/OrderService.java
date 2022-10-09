@@ -40,10 +40,10 @@ public class OrderService {
 
     try {
       Order shoppingCartDB = loadOrderById(shoppingCartId).get();
-      if (shoppingCart.getInitiator_id() == 0) {
-        shoppingCartDB.setInitiator_id(shoppingCartDB.getInitiator_id());
+      if (shoppingCart.getInitiatorId() == 0) {
+        shoppingCartDB.setInitiatorId(shoppingCartDB.getInitiatorId());
       } else {
-        shoppingCartDB.setInitiator_id(shoppingCart.getInitiator_id());
+        shoppingCartDB.setInitiatorId(shoppingCart.getInitiatorId());
       }
 //      if (shoppingCart.getPayment_id() == 0) {
 //        shoppingCartDB.setPayment_id(shoppingCartDB.getPayment_id());
@@ -53,7 +53,7 @@ public class OrderService {
 
       shoppingCartRepository.save(shoppingCartDB);
     } catch (NoSuchElementException e) {
-      if (shoppingCart.getInitiator_id() != 0) {
+      if (shoppingCart.getInitiatorId() != 0) {
         shoppingCartRepository.save(shoppingCart);
       } else {
         return "Please provide a valid Order";

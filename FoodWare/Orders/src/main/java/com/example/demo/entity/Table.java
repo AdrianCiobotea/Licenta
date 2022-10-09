@@ -21,7 +21,7 @@ public class Table {
   )
   private int id;
   @Column(nullable = false, name = "id_table")
-  private int id_table;
+  private int idTable;
   @Column(nullable = false, name = "table_status")
   private String status;
 }

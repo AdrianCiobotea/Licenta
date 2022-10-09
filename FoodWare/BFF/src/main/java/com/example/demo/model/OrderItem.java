@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,10 +9,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class OrderItem {
-  private int id;
+  private String id;
   private int quantity;
-  private int sub_order_id;
-  private int product_id;
-  private int status_id;
+  private int subOrderId;
+  private int productId;
+  private int statusId;
   // add list of extraIds
+  private List<Integer> extraIds;
 }
